@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 type Props = {};
 
@@ -7,11 +7,26 @@ export const Sort = (props: Props) => {
     const availableSort = ['Popular', 'Price', 'Alphabet'];
     const [visiblePopup, setVisiblePopup] = useState(false);
     const [activeSortType, setActiveSortType] = useState('Popular');
+
     const onSortHandler = (index: number, item: string) => {
         setActiveSort(index);
         setActiveSortType(item);
         setVisiblePopup(!visiblePopup);
     };
+
+    const closeSortPopup = (e: any) => {
+        if (!e.target.closest('.sort')) {
+            setVisiblePopup(false);
+        }
+    };
+
+    useEffect(() => {
+        document.body.addEventListener('click', closeSortPopup);
+
+        return () => {
+            document.body.removeEventListener('click', closeSortPopup);
+        };
+    }, []);
 
     return (
         <>

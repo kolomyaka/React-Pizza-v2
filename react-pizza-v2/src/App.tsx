@@ -26,6 +26,7 @@ function App() {
                                 return (
                                     <>
                                         <PizzaBlock
+                                            key={item.name}
                                             title={item.name}
                                             price={item.price}
                                             imageUrl={item.imageUrl}

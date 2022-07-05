@@ -19,6 +19,7 @@ export const Categories = ({ setActiveCategoryType }: Props) => {
                     {categories.map((category, index) => {
                         return (
                             <li
+                                key={category}
                                 className={activeCategory === index ? 'active' : ''}
                                 onClick={() => onCategoryHandler(index, category)}>
                                 {category}
