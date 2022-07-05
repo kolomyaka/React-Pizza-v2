@@ -1,34 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 type Props = {
+    id: number;
+    imageUrl: string;
     title: string;
     price: number;
+    rating: number;
+    category: number;
+    types: number[];
+    sizes: number[];
 };
 
-export const PizzaBlock = ({ title, price }: Props) => {
+export const PizzaBlock = ({
+    title,
+    price,
+    imageUrl,
+    category,
+    rating,
+    sizes,
+    types,
+    id,
+}: Props) => {
+    const [pizzaCount, setPizzaCount] = useState(0);
+    const availableTypes = ['Тонкое', 'Традиционное'];
+
+    const addPizzaHandler = () => {
+        setPizzaCount(pizzaCount + 1);
+    };
+
     return (
         <>
             <div className="pizza-block">
-                <img
-                    className="pizza-block__image"
-                    src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-                    alt="Pizza"
-                />
+                <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
                 <h4 className="pizza-block__title">{title}</h4>
                 <div className="pizza-block__selector">
                     <ul>
-                        <li className="active">тонкое</li>
-                        <li>традиционное</li>
+                        {availableTypes.map((item, index) => {
+                            return (
+                                <>
+                                    <li
+                                        key={item}
+                                        className={`${types.includes(index) ? 'disabled' : ''}`}>
+                                        {item}
+                                    </li>
+                                </>
+                            );
+                        })}
                     </ul>
                     <ul>
-                        <li className="active">26 см.</li>
-                        <li>30 см.</li>
-                        <li>40 см.</li>
+                        {sizes.map((size, index) => {
+                            return <li key={size}>{size}</li>;
+                        })}
                     </ul>
                 </div>
                 <div className="pizza-block__bottom">
                     <div className="pizza-block__price">от {price} ₽</div>
-                    <div className="button button--outline button--add">
+                    <button
+                        onClick={addPizzaHandler}
+                        className="button button--outline button--add">
                         <svg
                             width="12"
                             height="12"
@@ -41,8 +70,8 @@ export const PizzaBlock = ({ title, price }: Props) => {
                             />
                         </svg>
                         <span>Добавить</span>
-                        <i>2</i>
-                    </div>
+                        <i>{pizzaCount}</i>
+                    </button>
                 </div>
             </div>
         </>

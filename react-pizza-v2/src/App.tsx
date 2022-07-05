@@ -4,6 +4,8 @@ import { Categories } from './components/Categories';
 import './scss/app.scss';
 import { Sort } from './components/Sort';
 import { PizzaBlock } from './components/PizzaBlock';
+import pizzas from './pizzas.json';
+import { PizzaType } from './types/PizzaType';
 
 function App() {
     return (
@@ -18,10 +20,22 @@ function App() {
                         </div>
                         <h2 className="content__title">Все пиццы</h2>
                         <div className="content__items">
-                            <PizzaBlock title={'Мексиканская'} price={500} />
-                            <PizzaBlock title={'Четыре Сыра'} price={350} />
-                            <PizzaBlock title={'Пепперони'} price={550} />
-                            <PizzaBlock title={'Гавайская'} price={400} />
+                            {pizzas.map((item: PizzaType) => {
+                                return (
+                                    <>
+                                        <PizzaBlock
+                                            title={item.name}
+                                            price={item.price}
+                                            imageUrl={item.imageUrl}
+                                            category={item.category}
+                                            rating={item.rating}
+                                            sizes={item.sizes}
+                                            id={item.id}
+                                            types={item.types}
+                                        />
+                                    </>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
