@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Header } from './components/Header';
 import { Categories } from './components/Categories';
 import './scss/app.scss';
@@ -8,6 +8,8 @@ import pizzas from './pizzas.json';
 import { PizzaType } from './types/PizzaType';
 
 function App() {
+    const [activeCategoryType, setActiveCategoryType] = useState('All');
+
     return (
         <>
             <div className="wrapper">
@@ -15,10 +17,10 @@ function App() {
                 <div className="content">
                     <div className="container">
                         <div className="content__top">
-                            <Categories />
+                            <Categories setActiveCategoryType={setActiveCategoryType} />
                             <Sort />
                         </div>
-                        <h2 className="content__title">Все пиццы</h2>
+                        <h2 className="content__title">{activeCategoryType} pizzas</h2>
                         <div className="content__items">
                             {pizzas.map((item: PizzaType) => {
                                 return (

@@ -11,8 +11,8 @@ export const Header = (props: Props) => {
                     <div className="header__logo">
                         <img width="38" src={PizzaLogo} alt="Pizza logo" />
                         <div>
-                            <h1>React Pizza</h1>
-                            <p>самая вкусная пицца во вселенной</p>
+                            <h1>React Pizza V2</h1>
+                            <p>The most delicious pizza in the universe</p>
                         </div>
                     </div>
                     <div className="header__cart">

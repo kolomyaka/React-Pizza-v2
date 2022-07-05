@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 type Props = {};
 
 export const Sort = (props: Props) => {
+    const [activeSort, setActiveSort] = useState(0);
+    const availableSort = ['Popular', 'Price', 'Alphabet'];
+    const [visiblePopup, setVisiblePopup] = useState(false);
+    const [activeSortType, setActiveSortType] = useState('Popular');
+    const onSortHandler = (index: number, item: string) => {
+        setActiveSort(index);
+        setActiveSortType(item);
+        setVisiblePopup(!visiblePopup);
+    };
+
     return (
         <>
             <div className="sort">
                 <div className="sort__label">
                     <svg
+                        className={visiblePopup ? 'rotate' : ''}
                         width="10"
                         height="6"
                         viewBox="0 0 10 6"
@@ -18,16 +29,25 @@ export const Sort = (props: Props) => {
                             fill="#2C2C2C"
                         />
                     </svg>
-                    <b>Сортировка по:</b>
-                    <span>популярности</span>
+                    <b>Sort by:</b>
+                    <span onClick={() => setVisiblePopup(!visiblePopup)}>{activeSortType}</span>
                 </div>
-                <div className="sort__popup">
-                    <ul>
-                        <li className="active">популярности</li>
-                        <li>цене</li>
-                        <li>алфавиту</li>
-                    </ul>
-                </div>
+                {visiblePopup && (
+                    <div className="sort__popup">
+                        <ul>
+                            {availableSort.map((item, index) => {
+                                return (
+                                    <li
+                                        onClick={() => onSortHandler(index, item)}
+                                        key={item}
+                                        className={activeSort === index ? 'active' : ''}>
+                                        {item}
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+                )}
             </div>
         </>
     );
