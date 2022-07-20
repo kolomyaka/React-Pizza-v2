@@ -37,13 +37,11 @@ export const PizzaBlock = ({
                     <ul>
                         {availableTypes.map((item, index) => {
                             return (
-                                <>
-                                    <li
-                                        key={item}
-                                        className={`${types.includes(index) ? 'disabled' : ''}`}>
-                                        {item}
-                                    </li>
-                                </>
+                                <li
+                                    key={item}
+                                    className={`${types.includes(index) ? 'disabled' : ''}`}>
+                                    {item}
+                                </li>
                             );
                         })}
                     </ul>
