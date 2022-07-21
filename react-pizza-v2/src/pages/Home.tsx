@@ -6,7 +6,7 @@ import { Sort } from '../components/Sort';
 import { PizzaBlock } from '../components/PizzaBlock';
 import { PizzaType } from '../types/PizzaType';
 import { SkeletonPizzaBlock } from '../components/PizzaBlock/SkeletonPizzaBlock';
-import { useGetAllPizzasQuery } from '../api/getPizzas';
+import { useGetAllPizzasQuery, useGetFiltersPizzasQuery } from '../api/getPizzas';
 import { serverResponseType } from '../types/types';
 
 type Props = {};
@@ -18,18 +18,36 @@ type pizzasResponse = {
 };
 
 export const Home = (props: Props) => {
+    // Categories state
+    const [activeCategory, setActiveCategory] = useState<number>(0);
     const [activeCategoryType, setActiveCategoryType] = useState('All');
-    const [pizzas, setPizzas] = useState<any[]>([]);
+
+    // Sort state
+    const [activeSortType, setActiveSortType] = useState({
+        text: 'Popular',
+        value: 'rating',
+    });
+    // Request to server
     const { data, error, isLoading } = useGetAllPizzasQuery<pizzasResponse>();
+    const { filteredPizzas, filterError, isLoadingFilter } =
+        useGetFiltersPizzasQuery<pizzasResponse>(activeSortType.value, activeCategory);
+    useEffect(() => {
+        console.log(activeSortType);
+    }, [activeSortType, activeCategory]);
 
     return (
         <>
             <div className="container">
                 <div className="content__top">
-                    <Categories setActiveCategoryType={setActiveCategoryType} />
-                    <Sort />
+                    <Categories
+                        setActiveCategory={setActiveCategory}
+                        activeCategory={activeCategory}
+                        activeCategoryType={activeCategoryType}
+                        setActiveCategoryType={setActiveCategoryType}
+                    />
+                    <Sort activeSortType={activeSortType} setActiveSortType={setActiveSortType} />
                 </div>
-                <h2 className="content__title">Все пиццы</h2>
+                <h2 className="content__title">{activeCategoryType}</h2>
                 <div className="content__items">
                     {isLoading
                         ? Array(10)

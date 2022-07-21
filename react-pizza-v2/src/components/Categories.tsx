@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 
 type Props = {
-    setActiveCategoryType: (category: string) => void;
+    activeCategory: number;
+    activeCategoryType: string;
+    setActiveCategoryType: (item: string) => void;
+    setActiveCategory: (index: number) => void;
 };
 
-export const Categories = ({ setActiveCategoryType }: Props) => {
-    const [activeCategory, setActiveCategory] = useState(0);
-    const categories = ['All', 'Meat', 'Vegetarian', 'Grill', 'Spicy', 'Closed'];
+const categories = ['All', 'Meat', 'Vegetarian', 'Grill', 'Spicy', 'Closed'];
+
+export const Categories = ({
+    activeCategory,
+    setActiveCategory,
+    activeCategoryType,
+    setActiveCategoryType,
+}: Props) => {
     const onCategoryHandler = (index: number, category: string) => {
         setActiveCategory(index);
         setActiveCategoryType(category);

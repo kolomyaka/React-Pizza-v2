@@ -1,16 +1,29 @@
 import React, { useEffect, useState } from 'react';
 
-type Props = {};
+type Props = {
+    activeSortType: sortType;
+    setActiveSortType: (item: sortType) => void;
+};
 
-export const Sort = (props: Props) => {
+type sortType = {
+    text: string;
+    value: string;
+};
+
+const availableSort = [
+    { text: 'Popular', value: 'rating' },
+    { text: 'Price', value: 'price' },
+    { text: 'Alphabet', value: 'name' },
+];
+
+export const Sort = ({ setActiveSortType, activeSortType }: Props) => {
     const [activeSort, setActiveSort] = useState(0);
-    const availableSort = ['Popular', 'Price', 'Alphabet'];
     const [visiblePopup, setVisiblePopup] = useState(false);
-    const [activeSortType, setActiveSortType] = useState('Popular');
+    console.log(activeSortType);
 
-    const onSortHandler = (index: number, item: string) => {
+    const onSortHandler = (index: number, sortString: string, sortValue: string) => {
         setActiveSort(index);
-        setActiveSortType(item);
+        setActiveSortType({ text: sortString, value: sortValue });
         setVisiblePopup(!visiblePopup);
     };
 
@@ -45,7 +58,9 @@ export const Sort = (props: Props) => {
                         />
                     </svg>
                     <b>Sort by:</b>
-                    <span onClick={() => setVisiblePopup(!visiblePopup)}>{activeSortType}</span>
+                    <span onClick={() => setVisiblePopup(!visiblePopup)}>
+                        {activeSortType.text}
+                    </span>
                 </div>
                 {visiblePopup && (
                     <div className="sort__popup">
@@ -53,10 +68,10 @@ export const Sort = (props: Props) => {
                             {availableSort.map((item, index) => {
                                 return (
                                     <li
-                                        onClick={() => onSortHandler(index, item)}
-                                        key={item}
+                                        onClick={() => onSortHandler(index, item.text, item.value)}
+                                        key={item.text}
                                         className={activeSort === index ? 'active' : ''}>
-                                        {item}
+                                        {item.text}
                                     </li>
                                 );
                             })}
