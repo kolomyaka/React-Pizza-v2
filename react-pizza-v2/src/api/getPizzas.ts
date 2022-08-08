@@ -6,6 +6,7 @@ type filtersValue = {
     sort: string
 }
 
+
 export const pizzasApi = createApi({
     reducerPath: 'pizzasApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://62c992c74795d2d81f7e9935.mockapi.io/'}),
@@ -14,10 +15,8 @@ export const pizzasApi = createApi({
             query: () => `items`
         }),
         getFiltersPizzas: builder.query<PizzaType[], any>({
-            query: (arg) => {
-                const { sort, category }: any = arg
-                return `items?sortBy=${sort}&order=desc&category=${category}`;
-            }
+            query: ({sort, category}) =>  `items?sortBy=${sort}&order=desc&category=${category}`
+            
         })
         
     })

@@ -19,7 +19,6 @@ const availableSort = [
 export const Sort = ({ setActiveSortType, activeSortType }: Props) => {
     const [activeSort, setActiveSort] = useState(0);
     const [visiblePopup, setVisiblePopup] = useState(false);
-    console.log(activeSortType);
 
     const onSortHandler = (index: number, sortString: string, sortValue: string) => {
         setActiveSort(index);

@@ -8,6 +8,7 @@ import { PizzaType } from '../types/PizzaType';
 import { SkeletonPizzaBlock } from '../components/PizzaBlock/SkeletonPizzaBlock';
 import { useGetAllPizzasQuery, useGetFiltersPizzasQuery } from '../api/getPizzas';
 import { serverResponseType } from '../types/types';
+import { skipToken } from '@reduxjs/toolkit/dist/query';
 
 type Props = {};
 
@@ -19,8 +20,8 @@ type pizzasResponse = {
 
 export const Home = (props: Props) => {
     // Categories state
-    const [activeCategory, setActiveCategory] = useState<number>(0);
-    const [activeCategoryType, setActiveCategoryType] = useState('All');
+    const [activeCategory, setActiveCategory] = useState<any>(0);
+    const [activeCategoryType, setActiveCategoryType] = useState<string>('All');
 
     // Sort state
     const [activeSortType, setActiveSortType] = useState({
@@ -28,12 +29,11 @@ export const Home = (props: Props) => {
         value: 'rating',
     });
     // Request to server
-    const { data, error, isLoading } = useGetAllPizzasQuery<pizzasResponse>();
-    const { filteredPizzas, filterError, isLoadingFilter } =
-        useGetFiltersPizzasQuery<pizzasResponse>(activeSortType.value, activeCategory);
-    useEffect(() => {
-        console.log(activeSortType);
-    }, [activeSortType, activeCategory]);
+
+    const { data, error, isLoading } = useGetFiltersPizzasQuery({
+        category: activeCategory,
+        sort: activeSortType.value,
+    });
 
     return (
         <>
