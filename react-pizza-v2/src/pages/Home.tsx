@@ -7,7 +7,7 @@ import { PizzaBlock } from '../components/PizzaBlock';
 import { PizzaType } from '../types/PizzaType';
 import { SkeletonPizzaBlock } from '../components/PizzaBlock/SkeletonPizzaBlock';
 import { useGetAllPizzasQuery, useGetFiltersPizzasQuery } from '../api/getPizzas';
-import { serverResponseType } from '../types/types';
+import { serverResponseType, sortType } from '../types/types';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 
 type Props = {};
@@ -20,17 +20,21 @@ type pizzasResponse = {
 
 export const Home = (props: Props) => {
     // Categories state
-    const [activeCategory, setActiveCategory] = useState<any>(0);
+    const [activeCategory, setActiveCategory] = useState<number>(0);
     const [activeCategoryType, setActiveCategoryType] = useState<string>('All');
 
     // Sort state
-    const [activeSortType, setActiveSortType] = useState({
+    const [activeSortType, setActiveSortType] = useState<sortType>({
         text: 'Popular',
         value: 'rating',
     });
     // Request to server
 
-    const { data, error, isLoading } = useGetFiltersPizzasQuery({
+    const {
+        data,
+        error,
+        isFetching: isLoading,
+    } = useGetFiltersPizzasQuery({
         category: activeCategory,
         sort: activeSortType.value,
     });
@@ -49,24 +53,31 @@ export const Home = (props: Props) => {
                 </div>
                 <h2 className="content__title">{activeCategoryType}</h2>
                 <div className="content__items">
-                    {isLoading
-                        ? Array(10)
-                              .fill('')
-                              .map((_, index) => <SkeletonPizzaBlock key={index} />)
-                        : data &&
-                          data.map((item: PizzaType) => (
-                              <PizzaBlock
-                                  key={item.name}
-                                  id={item.id}
-                                  title={item.name}
-                                  price={item.price}
-                                  rating={item.rating}
-                                  category={item.category}
-                                  sizes={item.sizes}
-                                  imageUrl={item.imageUrl}
-                                  types={item.types}
-                              />
-                          ))}
+                    {isLoading ? (
+                        Array(10)
+                            .fill('')
+                            .map((_, index) => <SkeletonPizzaBlock key={index} />)
+                    ) : (
+                        <>
+                            {data && data.length > 0 ? (
+                                data.map((item: PizzaType) => (
+                                    <PizzaBlock
+                                        key={item.name}
+                                        id={item.id}
+                                        title={item.name}
+                                        price={item.price}
+                                        rating={item.rating}
+                                        category={item.category}
+                                        sizes={item.sizes}
+                                        imageUrl={item.imageUrl}
+                                        types={item.types}
+                                    />
+                                ))
+                            ) : (
+                                <></>
+                            )}
+                        </>
+                    )}
                 </div>
             </div>
         </>

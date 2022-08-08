@@ -1,21 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PizzaLogo from '../assets/icons/pizza-logo.svg';
+import { Search } from './Search';
 
 type Props = {};
 
 export const Header = (props: Props) => {
     return (
         <>
-            <div className="header">
+            <header className="header">
                 <div className="container">
-                    <Link to="/" className="header__logo">
-                        <img width="38" src={PizzaLogo} alt="Pizza logo" />
-                        <div>
-                            <h1>React Pizza V2</h1>
-                            <p>The most delicious pizza in the universe</p>
-                        </div>
-                    </Link>
+                    <div className="flex inline gap-32">
+                        <Link to="/" className="header__logo">
+                            <img width="38" src={PizzaLogo} alt="Pizza logo" />
+                            <div>
+                                <h1>React Pizza V2</h1>
+                                <p>The most delicious pizza in the universe</p>
+                            </div>
+                        </Link>
+                        <Search />
+                    </div>
                     <div className="header__cart">
                         <Link to="/cart" className="button button--cart">
                             <span>520 ₽</span>
@@ -52,7 +56,7 @@ export const Header = (props: Props) => {
                         </Link>
                     </div>
                 </div>
-            </div>
+            </header>
         </>
     );
 };

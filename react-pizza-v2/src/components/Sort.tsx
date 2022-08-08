@@ -43,7 +43,7 @@ export const Sort = ({ setActiveSortType, activeSortType }: Props) => {
     return (
         <>
             <div className="sort">
-                <div className="sort__label">
+                <div className="sort__label" onClick={() => setVisiblePopup(!visiblePopup)}>
                     <svg
                         className={visiblePopup ? 'rotate' : ''}
                         width="10"
@@ -57,9 +57,7 @@ export const Sort = ({ setActiveSortType, activeSortType }: Props) => {
                         />
                     </svg>
                     <b>Sort by:</b>
-                    <span onClick={() => setVisiblePopup(!visiblePopup)}>
-                        {activeSortType.text}
-                    </span>
+                    <span>{activeSortType.text}</span>
                 </div>
                 {visiblePopup && (
                     <div className="sort__popup">
