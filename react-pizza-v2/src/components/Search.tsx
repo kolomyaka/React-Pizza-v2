@@ -1,30 +1,36 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useGetSearchPizzasQuery } from '../api/getPizzas';
 import { useDebounce } from '../Hooks/useDebounce';
+import { setSearchValue } from '../store/slices/filter';
 
 type Props = {};
 
 export const Search = (props: Props) => {
-    const [searchValue, setSearchValue] = useState<string>('');
+    const dispatch = useDispatch();
 
-    // const debouncedValue = useDebounce(searchValue, 500);
+    const [stringValue, setStringValue] = useState<string>('');
 
-    // useGetSearchPizzasQuery(searchValue);
+    const debouncedSearchValue = useDebounce(stringValue, 300);
 
-    const { data, error, isFetching: isLoading } = useGetSearchPizzasQuery(searchValue);
+    useEffect(() => {
+        if (debouncedSearchValue) {
+            dispatch(setSearchValue(debouncedSearchValue));
+        }
+    }, [debouncedSearchValue]);
 
     return (
         <>
             <label className="search">
                 <input
                     type="text"
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
+                    value={stringValue}
+                    onChange={(e) => setStringValue(e.target.value)}
                     placeholder="Поиск..."
                 />
-                {searchValue && (
+                {stringValue && (
                     <svg
-                        onClick={() => setSearchValue('')}
+                        onClick={() => setStringValue('')}
                         className="icon close"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"

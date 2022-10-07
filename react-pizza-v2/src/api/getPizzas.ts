@@ -16,7 +16,7 @@ export const pizzasApi = createApi({
             query: () => `items`
         }),
         getFiltersPizzas: builder.query<PizzaType[], any>({
-            query: ({sort, category}) =>  `items?sortBy=${sort}&order=desc&category=${category}`
+            query: ({sort, category, name}) =>  `items?name=${name}&sortBy=${sort}&order=desc&category=${category}`
         }),
         getSearchPizzas: builder.query<PizzaType[], any>({
             query: (string) => `items?name=${string}`

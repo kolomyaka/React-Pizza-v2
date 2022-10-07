@@ -27,10 +27,11 @@ export const Home = (props: Props) => {
 
     // Sort state
     const activeSortType = useSelector<RootState, sortType>((state) => state.filters.sort);
+
+    // Search state
+    const searchValue = useSelector<RootState, string>((state) => state.filters.searchValue);
+
     // Request to server
-
-    console.log(activeSortType);
-
     const {
         data,
         error,
@@ -38,6 +39,7 @@ export const Home = (props: Props) => {
     } = useGetFiltersPizzasQuery({
         category: activeCategory,
         sort: activeSortType.sortProperty,
+        name: searchValue,
     });
 
     return (
