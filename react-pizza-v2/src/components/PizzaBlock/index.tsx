@@ -39,7 +39,9 @@ export const PizzaBlock = ({
                             return (
                                 <li
                                     key={item}
-                                    className={`${types.includes(index) ? 'disabled' : ''}`}>
+                                    className={`
+                                    ${types.includes(index) ? '' : 'disabled'} 
+                                    ${index === types[0] ? 'active' : ''}`}>
                                     {item}
                                 </li>
                             );

@@ -1,7 +1,7 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 
 import { pizzasApi } from './../api/getPizzas';
-import filterSliceReducer from './slices/filter'
+import filterSliceReducer from './slices/filterSlice'
 
 export const store = configureStore({
     reducer: {

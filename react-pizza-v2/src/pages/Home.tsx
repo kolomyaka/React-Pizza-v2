@@ -11,6 +11,7 @@ import { serverResponseType, sortType } from '../types/types';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { filterInitialState } from '../store/slices/filterSlice';
 
 type Props = {};
 
@@ -20,16 +21,19 @@ type pizzasResponse = {
     isLoading: boolean;
 };
 
+type filterState = {
+    activeCategory: number;
+};
+
 export const Home = (props: Props) => {
     // Categories state
-    const activeCategory = useSelector<RootState, number>((state) => state.filters.categoryId);
     const [activeCategoryType, setActiveCategoryType] = useState<string>('All');
 
-    // Sort state
-    const activeSortType = useSelector<RootState, sortType>((state) => state.filters.sort);
-
-    // Search state
-    const searchValue = useSelector<RootState, string>((state) => state.filters.searchValue);
+    const {
+        categoryId: activeCategory,
+        sort,
+        searchValue,
+    } = useSelector<RootState, filterInitialState>((state) => state.filters);
 
     // Request to server
     const {
@@ -38,7 +42,7 @@ export const Home = (props: Props) => {
         isFetching: isLoading,
     } = useGetFiltersPizzasQuery({
         category: activeCategory,
-        sort: activeSortType.sortProperty,
+        sort: sort.sortProperty,
         name: searchValue,
     });
 
@@ -48,10 +52,9 @@ export const Home = (props: Props) => {
                 <div className="content__top">
                     <Categories
                         activeCategory={activeCategory}
-                        activeCategoryType={activeCategoryType}
                         setActiveCategoryType={setActiveCategoryType}
                     />
-                    <Sort activeSortType={activeSortType} />
+                    <Sort activeSortType={sort} />
                 </div>
                 <h2 className="content__title">{activeCategoryType}</h2>
                 <div className="content__items">

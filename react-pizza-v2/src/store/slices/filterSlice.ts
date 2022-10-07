@@ -1,6 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { sortType } from "../../types/types"
 
-
+export type filterInitialState = {
+    categoryId: number
+    sort: {
+        name: string
+        sortProperty: string
+    }
+    searchValue: string
+}
 
 const initialState = {
     categoryId: 0,

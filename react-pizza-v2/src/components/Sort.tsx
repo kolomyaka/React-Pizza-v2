@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSortValue } from '../store/slices/filter';
+import { setSortValue } from '../store/slices/filterSlice';
 
 type Props = {
     activeSortType: sortType;
@@ -13,7 +13,8 @@ type sortType = {
 
 const availableSort = [
     { name: 'Popular', sortProperty: 'rating' },
-    { name: 'Price', sortProperty: 'price' },
+    { name: 'Price ↑', sortProperty: '-price' },
+    { name: 'Price ↓', sortProperty: 'price' },
     { name: 'Alphabet', sortProperty: 'name' },
 ];
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetSearchPizzasQuery } from '../api/getPizzas';
 import { useDebounce } from '../Hooks/useDebounce';
-import { setSearchValue } from '../store/slices/filter';
+import { setSearchValue } from '../store/slices/filterSlice';
 
 type Props = {};
 
@@ -14,9 +14,7 @@ export const Search = (props: Props) => {
     const debouncedSearchValue = useDebounce(stringValue, 300);
 
     useEffect(() => {
-        if (debouncedSearchValue) {
-            dispatch(setSearchValue(debouncedSearchValue));
-        }
+        dispatch(setSearchValue(debouncedSearchValue));
     }, [debouncedSearchValue]);
 
     return (

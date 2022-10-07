@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setCategoryId } from '../store/slices/filter';
+import { setCategoryId } from '../store/slices/filterSlice';
 
 type Props = {
     activeCategory: number;
-    activeCategoryType: string;
     setActiveCategoryType: (item: string) => void;
 };
 
 const categories = ['All', 'Meat', 'Vegetarian', 'Grill', 'Spicy', 'Closed'];
 
-export const Categories = ({
-    activeCategory,
-    activeCategoryType,
-    setActiveCategoryType,
-}: Props) => {
+export const Categories = ({ activeCategory, setActiveCategoryType }: Props) => {
     const dispatch = useDispatch();
 
     const onCategoryHandler = (index: number, category: string) => {
