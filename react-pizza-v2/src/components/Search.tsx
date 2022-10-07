@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useGetSearchPizzasQuery } from '../api/getPizzas';
 import { useDebounce } from '../Hooks/useDebounce';
 
 type Props = {};
@@ -6,9 +7,11 @@ type Props = {};
 export const Search = (props: Props) => {
     const [searchValue, setSearchValue] = useState<string>('');
 
-    const debouncedValue = useDebounce(searchValue, 500);
+    // const debouncedValue = useDebounce(searchValue, 500);
 
-    useEffect(() => {}, [debouncedValue]);
+    // useGetSearchPizzasQuery(searchValue);
+
+    const { data, error, isFetching: isLoading } = useGetSearchPizzasQuery(searchValue);
 
     return (
         <>

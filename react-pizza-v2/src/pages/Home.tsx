@@ -9,6 +9,8 @@ import { SkeletonPizzaBlock } from '../components/PizzaBlock/SkeletonPizzaBlock'
 import { useGetAllPizzasQuery, useGetFiltersPizzasQuery } from '../api/getPizzas';
 import { serverResponseType, sortType } from '../types/types';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 type Props = {};
 
@@ -20,15 +22,14 @@ type pizzasResponse = {
 
 export const Home = (props: Props) => {
     // Categories state
-    const [activeCategory, setActiveCategory] = useState<number>(0);
+    const activeCategory = useSelector<RootState, number>((state) => state.filters.categoryId);
     const [activeCategoryType, setActiveCategoryType] = useState<string>('All');
 
     // Sort state
-    const [activeSortType, setActiveSortType] = useState<sortType>({
-        text: 'Popular',
-        value: 'rating',
-    });
+    const activeSortType = useSelector<RootState, sortType>((state) => state.filters.sort);
     // Request to server
+
+    console.log(activeSortType);
 
     const {
         data,
@@ -36,7 +37,7 @@ export const Home = (props: Props) => {
         isFetching: isLoading,
     } = useGetFiltersPizzasQuery({
         category: activeCategory,
-        sort: activeSortType.value,
+        sort: activeSortType.sortProperty,
     });
 
     return (
@@ -44,12 +45,11 @@ export const Home = (props: Props) => {
             <div className="container">
                 <div className="content__top">
                     <Categories
-                        setActiveCategory={setActiveCategory}
                         activeCategory={activeCategory}
                         activeCategoryType={activeCategoryType}
                         setActiveCategoryType={setActiveCategoryType}
                     />
-                    <Sort activeSortType={activeSortType} setActiveSortType={setActiveSortType} />
+                    <Sort activeSortType={activeSortType} />
                 </div>
                 <h2 className="content__title">{activeCategoryType}</h2>
                 <div className="content__items">

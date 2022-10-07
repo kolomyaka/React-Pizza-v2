@@ -8,6 +8,6 @@ export type serverResponseType = {
 }
 
 export type sortType = {
-    value: string,
-    text: string
+    name: string
+    sortProperty: string,
 }
