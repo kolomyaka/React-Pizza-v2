@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addPizzaToCart } from '../../store/slices/cartSlice';
 
 type Props = {
     id: number;
@@ -11,6 +13,8 @@ type Props = {
     sizes: number[];
 };
 
+const availableTypes = ['Тонкое', 'Традиционное'];
+
 export const PizzaBlock = ({
     title,
     price,
@@ -21,11 +25,23 @@ export const PizzaBlock = ({
     types,
     id,
 }: Props) => {
+    const dispatch = useDispatch();
+
     const [pizzaCount, setPizzaCount] = useState(0);
-    const availableTypes = ['Тонкое', 'Традиционное'];
+    const [sizeIndex, setSizeIndex] = useState(0);
+    const [typeIndex, setTypeIndex] = useState(0);
 
     const addPizzaHandler = () => {
         setPizzaCount(pizzaCount + 1);
+        dispatch(
+            addPizzaToCart({
+                id,
+                size: sizes[sizeIndex],
+                category: availableTypes[typeIndex],
+                title,
+                price,
+            }),
+        );
     };
 
     return (
@@ -38,10 +54,11 @@ export const PizzaBlock = ({
                         {availableTypes.map((item, index) => {
                             return (
                                 <li
+                                    onClick={() => setTypeIndex(index)}
                                     key={item}
                                     className={`
                                     ${types.includes(index) ? '' : 'disabled'} 
-                                    ${index === types[0] ? 'active' : ''}`}>
+                                    ${index === types[typeIndex] ? 'active' : ''}`}>
                                     {item}
                                 </li>
                             );
@@ -49,7 +66,14 @@ export const PizzaBlock = ({
                     </ul>
                     <ul>
                         {sizes.map((size, index) => {
-                            return <li key={size}>{size}</li>;
+                            return (
+                                <li
+                                    key={size}
+                                    onClick={() => setSizeIndex(index)}
+                                    className={`${index === sizeIndex ? 'active' : ''}`}>
+                                    {size}
+                                </li>
+                            );
                         })}
                     </ul>
                 </div>

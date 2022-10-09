@@ -2,11 +2,13 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 
 import { pizzasApi } from './../api/getPizzas';
 import filterSliceReducer from './slices/filterSlice'
+import cartSliceReducer from './slices/cartSlice'
 
 export const store = configureStore({
     reducer: {
         [pizzasApi.reducerPath]: pizzasApi.reducer,
-        filters: filterSliceReducer
+        filters: filterSliceReducer,
+        cart: cartSliceReducer
     },
 
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(pizzasApi.middleware),
