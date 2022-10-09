@@ -2,6 +2,11 @@
 @import './libs/normalize.scss';
 @import './components/all.scss';
 
+:root {
+    --orange: #fe5f1e;
+    --background: #ffdf8c;
+}
+
 body {
   background-color: $background;
 }
@@ -392,3 +397,29 @@ body {
     }
 }
 
+.container--cart {
+    & .content__items {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
+.overlay {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    background-color: rgba($color: #000000, $alpha: .7);
+
+    & .popup {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        border: 1px solid var(--background);
+        border-radius: 20px;
+    }
+}

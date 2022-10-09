@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addPizzaToCart } from '../../store/slices/cartSlice';
+import { addPizzaToCart, setTotalCartSize, setTotalPrice } from '../../store/slices/cartSlice';
 
 type Props = {
     id: number;
@@ -40,8 +40,11 @@ export const PizzaBlock = ({
                 category: availableTypes[typeIndex],
                 title,
                 price,
+                imageUrl,
             }),
         );
+        dispatch(setTotalPrice(price));
+        dispatch(setTotalCartSize());
     };
 
     return (
