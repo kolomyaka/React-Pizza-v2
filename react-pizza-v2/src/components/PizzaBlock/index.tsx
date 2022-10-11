@@ -29,7 +29,7 @@ export const PizzaBlock = ({
 
     const [pizzaCount, setPizzaCount] = useState(0);
     const [sizeIndex, setSizeIndex] = useState(0);
-    const [typeIndex, setTypeIndex] = useState(0);
+    const [typeIndex, setTypeIndex] = useState(types[0]);
 
     const addPizzaHandler = () => {
         setPizzaCount(pizzaCount + 1);
@@ -61,7 +61,7 @@ export const PizzaBlock = ({
                                     key={item}
                                     className={`
                                     ${types.includes(index) ? '' : 'disabled'} 
-                                    ${index === types[typeIndex] ? 'active' : ''}`}>
+                                    ${index === typeIndex ? 'active' : ''}`}>
                                     {item}
                                 </li>
                             );

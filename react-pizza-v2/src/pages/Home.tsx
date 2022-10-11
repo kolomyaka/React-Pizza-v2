@@ -43,6 +43,7 @@ export const Home = (props: Props) => {
     } = useGetFiltersPizzasQuery({
         category: activeCategory,
         sort: sort.sortProperty,
+        order: sort.order,
         name: searchValue,
     });
 

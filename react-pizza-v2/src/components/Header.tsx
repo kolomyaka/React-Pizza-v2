@@ -3,13 +3,17 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PizzaLogo from '../assets/icons/pizza-logo.svg';
 import { RootState } from '../store';
+import { cartPizza } from '../store/slices/cartSlice';
+import { getCartPrice, getCartSize } from '../util/util';
 import { Search } from './Search';
 
 type Props = {};
 
 export const Header = (props: Props) => {
-    const totalPrice = useSelector<RootState, number>((state) => state.cart.totalPrice);
-    const totalCount = useSelector<RootState, number>((state) => state.cart.totalCount);
+    // const totalPrice = useSelector<RootState, number>((state) => state.cart.totalPrice);
+    const pizzas = useSelector<RootState, cartPizza[]>((state) => state.cart.pizzas);
+    const totalPrice = getCartPrice(pizzas);
+    const totalCount = getCartSize(pizzas);
 
     return (
         <>

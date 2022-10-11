@@ -1,6 +1,9 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { minusCount, plusCount, removePizzaFromCart } from '../store/slices/cartSlice';
 
 type Props = {
+    id: number;
     imageUrl: string;
     title: string;
     type: string;
@@ -9,10 +12,18 @@ type Props = {
     price: number;
 };
 
-const CartItem = ({ imageUrl, title, type, size, count, price }: Props) => {
-    const onClickMinus = () => {};
-    const onClickPlus = () => {};
-    const onClickRemove = () => {};
+const CartItem = ({ id, imageUrl, title, type, size, count, price }: Props) => {
+    const dispatch = useDispatch();
+
+    const onClickMinus = (id: number, type: string, size: number) => {
+        dispatch(minusCount({ id, category: type, size }));
+    };
+    const onClickPlus = (id: number, type: string, size: number) => {
+        dispatch(plusCount({ id, category: type, size }));
+    };
+    const onClickRemove = (id: number, type: string, size: number) => {
+        dispatch(removePizzaFromCart({ id, category: type, size }));
+    };
 
     return (
         <>
@@ -23,13 +34,13 @@ const CartItem = ({ imageUrl, title, type, size, count, price }: Props) => {
                 <div className="cart__item-info">
                     <h3>{title}</h3>
                     <p>
-                        {type}, {size} см.
+                        {type} тесто, {size} см.
                     </p>
                 </div>
                 <div className="cart__item-count">
                     <button
                         disabled={count === 1}
-                        onClick={onClickMinus}
+                        onClick={() => onClickMinus(id, type, size)}
                         className="button button--outline button--circle cart__item-count-minus">
                         <svg
                             width="10"
@@ -47,7 +58,7 @@ const CartItem = ({ imageUrl, title, type, size, count, price }: Props) => {
                     </button>
                     <b>{count}</b>
                     <button
-                        onClick={onClickPlus}
+                        onClick={() => onClickPlus(id, type, size)}
                         className="button button--outline button--circle cart__item-count-plus">
                         <svg
                             width="10"
@@ -68,7 +79,9 @@ const CartItem = ({ imageUrl, title, type, size, count, price }: Props) => {
                     <b>{price * count} ₽</b>
                 </div>
                 <div className="cart__item-remove">
-                    <div onClick={onClickRemove} className="button button--outline button--circle">
+                    <div
+                        onClick={() => onClickRemove(id, type, size)}
+                        className="button button--outline button--circle">
                         <svg
                             width="10"
                             height="10"

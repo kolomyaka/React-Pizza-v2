@@ -12,10 +12,10 @@ type sortType = {
 };
 
 const availableSort = [
-    { name: 'Popular', sortProperty: 'rating' },
-    { name: 'Price ↑', sortProperty: '-price' },
-    { name: 'Price ↓', sortProperty: 'price' },
-    { name: 'Alphabet', sortProperty: 'name' },
+    { name: 'Popular', sortProperty: 'rating', order: 'asc' },
+    { name: 'Price ↑', sortProperty: 'price', order: 'asc' },
+    { name: 'Price ↓', sortProperty: 'price', order: 'desc' },
+    { name: 'Alphabet', sortProperty: 'name', order: 'asc' },
 ];
 
 export const Sort = ({ activeSortType }: Props) => {
@@ -24,9 +24,9 @@ export const Sort = ({ activeSortType }: Props) => {
     const [activeSort, setActiveSort] = useState(0);
     const [visiblePopup, setVisiblePopup] = useState(false);
 
-    const onSortHandler = (index: number, name: string, sortProperty: string) => {
+    const onSortHandler = (index: number, name: string, sortProperty: string, order: string) => {
         setActiveSort(index);
-        dispatch(setSortValue({ name, sortProperty }));
+        dispatch(setSortValue({ name, sortProperty, order }));
         setVisiblePopup(!visiblePopup);
     };
 
@@ -70,7 +70,12 @@ export const Sort = ({ activeSortType }: Props) => {
                                 return (
                                     <li
                                         onClick={() =>
-                                            onSortHandler(index, item.name, item.sortProperty)
+                                            onSortHandler(
+                                                index,
+                                                item.name,
+                                                item.sortProperty,
+                                                item.order,
+                                            )
                                         }
                                         key={item.name}
                                         className={activeSort === index ? 'active' : ''}>

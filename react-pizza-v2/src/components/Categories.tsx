@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { setCategoryId } from '../store/slices/filterSlice';
 
 type Props = {
-    activeCategory: number;
+    activeCategory: number | null;
     setActiveCategoryType: (item: string) => void;
 };
 
-const categories = ['All', 'Meat', 'Vegetarian', 'Grill', 'Spicy', 'Closed'];
+const categories = ['All', 'Vegetarian', 'Meat', 'Grill', 'Spicy', 'Closed'];
 
 export const Categories = ({ activeCategory, setActiveCategoryType }: Props) => {
     const dispatch = useDispatch();
@@ -25,7 +25,12 @@ export const Categories = ({ activeCategory, setActiveCategoryType }: Props) => 
                         return (
                             <li
                                 key={category}
-                                className={activeCategory === index ? 'active' : ''}
+                                className={
+                                    activeCategory === index ||
+                                    (activeCategory === null && index === 0)
+                                        ? 'active'
+                                        : ''
+                                }
                                 onClick={() => onCategoryHandler(index, category)}>
                                 {category}
                             </li>

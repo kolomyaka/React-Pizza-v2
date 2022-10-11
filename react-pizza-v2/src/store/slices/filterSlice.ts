@@ -2,19 +2,21 @@ import { createSlice } from "@reduxjs/toolkit"
 import { sortType } from "../../types/types"
 
 export type filterInitialState = {
-    categoryId: number
+    categoryId: number | null
     sort: {
         name: string
         sortProperty: string
+        order: string
     }
     searchValue: string
 }
 
 const initialState = {
-    categoryId: 0,
+    categoryId: null,
     sort: {
         name: 'Popular',
-        sortProperty: 'rating'
+        sortProperty: 'rating',
+        order: 'asc'
     },
     searchValue: '',
 }
@@ -29,6 +31,7 @@ export const filterSlice = createSlice({
         setSortValue: (state, action) => {
             state.sort.name = action.payload.name
             state.sort.sortProperty = action.payload.sortProperty
+            state.sort.order = action.payload.order
         },
         setSearchValue: (state, action) => {
             state.searchValue = action.payload

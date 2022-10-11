@@ -3,36 +3,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CartEmpty from '../components/CartEmpty';
 import CartItem from '../components/CartItem';
+import ClearCartPopup from '../components/ClearCartPopup';
 import { RootState } from '../store';
-import { cartInitialState } from '../store/slices/cartSlice';
-
-type cartPizza = {
-    id: number;
-    size: number;
-    category: string;
-    price: number;
-    title: string;
-    count: number;
-};
+import { cartInitialState, cartPizza } from '../store/slices/cartSlice';
+import { getCartPrice, getCartSize } from '../util/util';
 
 type Props = {};
 
 export const Cart = (props: Props) => {
     const dispatch = useDispatch();
 
-    const { totalPrice, totalCount, pizzas } = useSelector<RootState, cartInitialState>(
-        (state) => state.cart,
-    );
+    const pizzas = useSelector<RootState, cartPizza[]>((state) => state.cart.pizzas);
+    const totalPrice = getCartPrice(pizzas);
+    const totalSize = getCartSize(pizzas);
 
-    const [clearCartPopup, setClearCartPopup] = useState(true);
+    const [clearCartPopupVisible, setClearCartPopupVisible] = useState(false);
 
     const clearCartHandler = () => {
-        setClearCartPopup(true);
+        setClearCartPopupVisible(true);
     };
 
-    // if (pizzas.length === 0) {
-    //     return <CartEmpty />;
-    // }
+    if (pizzas.length === 0) {
+        return <CartEmpty />;
+    }
 
     return (
         <>
@@ -99,7 +92,6 @@ export const Cart = (props: Props) => {
                                     strokeLinecap="round"
                                     strokeLinejoin="round"></path>
                             </svg>
-
                             <span>Очистить корзину</span>
                         </div>
                     </div>
@@ -107,6 +99,7 @@ export const Cart = (props: Props) => {
                         {pizzas.map((pizza) => {
                             return (
                                 <CartItem
+                                    id={pizza.id}
                                     size={pizza.size}
                                     type={pizza.category}
                                     price={pizza.price}
@@ -120,12 +113,10 @@ export const Cart = (props: Props) => {
                     <div className="cart__bottom">
                         <div className="cart__bottom-details">
                             <span>
-                                {' '}
-                                Всего пицц: <b>{totalCount} шт.</b>{' '}
+                                Всего пицц: <b>{totalSize} шт.</b>
                             </span>
                             <span>
-                                {' '}
-                                Сумма заказа: <b>{totalPrice} ₽</b>{' '}
+                                Сумма заказа: <b>{totalPrice} ₽</b>
                             </span>
                         </div>
                         <div className="cart__bottom-buttons">
@@ -146,38 +137,15 @@ export const Cart = (props: Props) => {
 
                                 <span>Вернуться назад</span>
                             </Link>
-                            <div className="button pay-btn">
+                            <button className="button pay-btn">
                                 <span>Оплатить сейчас</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {clearCartPopup && (
-                <div className="overlay">
-                    <div className="popup">
-                        <h3>Вы уверены, что хотите очистить корзину?</h3>
-                        <div className="cart__bottom-buttons">
-                            <button>
-                                <svg
-                                    width="8"
-                                    height="14"
-                                    viewBox="0 0 8 14"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M7 13L1 6.93015L6.86175 1"
-                                        stroke="#D3D3D3"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"></path>
-                                </svg>
-
-                                <span>Вернуться назад</span>
                             </button>
                         </div>
                     </div>
                 </div>
+            </div>
+            {clearCartPopupVisible && (
+                <ClearCartPopup setClearPopupVisible={setClearCartPopupVisible} />
             )}
         </>
     );
