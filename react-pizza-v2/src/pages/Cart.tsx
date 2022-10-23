@@ -5,7 +5,7 @@ import CartEmpty from '../components/CartEmpty';
 import CartItem from '../components/CartItem';
 import ClearCartPopup from '../components/ClearCartPopup';
 import { RootState } from '../store';
-import { cartInitialState, cartPizza } from '../store/slices/cartSlice';
+import { cartPizza } from '../store/slices/cartSlice';
 import { getCartPrice, getCartSize } from '../util/util';
 
 type Props = {};

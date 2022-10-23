@@ -7,12 +7,12 @@ type Props = {
     setActiveCategoryType: (item: string) => void;
 };
 
-const categories = ['All', 'Vegetarian', 'Meat', 'Grill', 'Spicy', 'Closed'];
+const categories = ['Vegetarian', 'Meat', 'Grill', 'Spicy', 'Closed'];
 
 export const Categories = ({ activeCategory, setActiveCategoryType }: Props) => {
     const dispatch = useDispatch();
 
-    const onCategoryHandler = (index: number, category: string) => {
+    const onCategoryHandler = (index: number | null, category: string) => {
         dispatch(setCategoryId(index));
         setActiveCategoryType(category);
     };
@@ -21,16 +21,16 @@ export const Categories = ({ activeCategory, setActiveCategoryType }: Props) => 
         <>
             <div className="categories">
                 <ul>
+                    <li
+                        className={`${activeCategory === null ? 'active' : ''}`}
+                        onClick={() => onCategoryHandler(null, 'All')}>
+                        All
+                    </li>
                     {categories.map((category, index) => {
                         return (
                             <li
                                 key={category}
-                                className={
-                                    activeCategory === index ||
-                                    (activeCategory === null && index === 0)
-                                        ? 'active'
-                                        : ''
-                                }
+                                className={activeCategory === index ? 'active' : ''}
                                 onClick={() => onCategoryHandler(index, category)}>
                                 {category}
                             </li>

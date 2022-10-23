@@ -65,23 +65,21 @@ export const Home = (props: Props) => {
                             .map((_, index) => <SkeletonPizzaBlock key={index} />)
                     ) : (
                         <>
-                            {data && data.length > 0 ? (
-                                data.map((item: PizzaType) => (
-                                    <PizzaBlock
-                                        key={item.name}
-                                        id={item.id}
-                                        title={item.name}
-                                        price={item.price}
-                                        rating={item.rating}
-                                        category={item.category}
-                                        sizes={item.sizes}
-                                        imageUrl={item.imageUrl}
-                                        types={item.types}
-                                    />
-                                ))
-                            ) : (
-                                <></>
-                            )}
+                            {data && data.length > 0
+                                ? data.map((item: PizzaType) => (
+                                      <PizzaBlock
+                                          key={item.name}
+                                          id={item.id}
+                                          title={item.name}
+                                          price={item.price}
+                                          rating={item.rating}
+                                          category={item.category}
+                                          sizes={item.sizes}
+                                          imageUrl={item.imageUrl}
+                                          types={item.types}
+                                      />
+                                  ))
+                                : null}
                         </>
                     )}
                 </div>
