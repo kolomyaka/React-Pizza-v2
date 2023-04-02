@@ -1,0 +1,6 @@
+- ReactJS 
+- TypeScript
+- Redux toolkit
+- RTK Query
+- React Router
+- mockapi.io
